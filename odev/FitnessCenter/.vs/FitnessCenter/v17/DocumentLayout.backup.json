@@ -1,0 +1,172 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|c:\\users\\smyye\\source\\repos\\fitnesscenter\\fitnesscenter\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|solutionrelative:fitnesscenter\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|c:\\users\\smyye\\source\\repos\\fitnesscenter\\fitnesscenter\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|solutionrelative:fitnesscenter\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|c:\\users\\smyye\\source\\repos\\fitnesscenter\\fitnesscenter\\controllers\\appointmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|solutionrelative:fitnesscenter\\controllers\\appointmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|c:\\users\\smyye\\source\\repos\\fitnesscenter\\fitnesscenter\\views\\appointments\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|solutionrelative:fitnesscenter\\views\\appointments\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|c:\\users\\smyye\\source\\repos\\fitnesscenter\\fitnesscenter\\views\\trainers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|solutionrelative:fitnesscenter\\views\\trainers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|c:\\users\\smyye\\source\\repos\\fitnesscenter\\fitnesscenter\\controllers\\trainerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|solutionrelative:fitnesscenter\\controllers\\trainerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|c:\\users\\smyye\\source\\repos\\fitnesscenter\\fitnesscenter\\views\\appointments\\myappointments.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|solutionrelative:fitnesscenter\\views\\appointments\\myappointments.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|c:\\users\\smyye\\source\\repos\\fitnesscenter\\fitnesscenter\\views\\appointments\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|solutionrelative:fitnesscenter\\views\\appointments\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|c:\\users\\smyye\\source\\repos\\fitnesscenter\\fitnesscenter\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1BE545B2-9A6F-4F45-B10B-9BC7CEBBBF4A}|FitnessCenter\\FitnessCenter.csproj|solutionrelative:fitnesscenter\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_LoginPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeDocumentMoniker": "FitnessCenter\\Views\\Shared\\_LoginPartial.cshtml",
+              "ToolTip": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeToolTip": "FitnessCenter\\Views\\Shared\\_LoginPartial.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAIwAoAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T08:06:56.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Appointments\\Index.cshtml",
+              "RelativeDocumentMoniker": "FitnessCenter\\Views\\Appointments\\Index.cshtml",
+              "ToolTip": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Appointments\\Index.cshtml",
+              "RelativeToolTip": "FitnessCenter\\Views\\Appointments\\Index.cshtml",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAACgAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T07:45:50.798Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Trainers\\Index.cshtml",
+              "RelativeDocumentMoniker": "FitnessCenter\\Views\\Trainers\\Index.cshtml",
+              "ToolTip": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Trainers\\Index.cshtml",
+              "RelativeToolTip": "FitnessCenter\\Views\\Trainers\\Index.cshtml",
+              "ViewState": "AgIAADsAAAAAAAAAAAAswFAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T07:28:44.512Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TrainersController.cs",
+              "DocumentMoniker": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Controllers\\TrainersController.cs",
+              "RelativeDocumentMoniker": "FitnessCenter\\Controllers\\TrainersController.cs",
+              "ToolTip": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Controllers\\TrainersController.cs",
+              "RelativeToolTip": "FitnessCenter\\Controllers\\TrainersController.cs",
+              "ViewState": "AgIAAIkAAAAAAAAAAAAmwJAAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T07:26:58.294Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "FitnessCenter\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "FitnessCenter\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAswKMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T07:18:31.857Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MyAppointments.cshtml",
+              "DocumentMoniker": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Appointments\\MyAppointments.cshtml",
+              "RelativeDocumentMoniker": "FitnessCenter\\Views\\Appointments\\MyAppointments.cshtml",
+              "ToolTip": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Appointments\\MyAppointments.cshtml",
+              "RelativeToolTip": "FitnessCenter\\Views\\Appointments\\MyAppointments.cshtml",
+              "ViewState": "AgIAAB4AAAAAAAAAAADwvyMAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T07:06:53.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Appointments\\Create.cshtml",
+              "RelativeDocumentMoniker": "FitnessCenter\\Views\\Appointments\\Create.cshtml",
+              "ToolTip": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Views\\Appointments\\Create.cshtml",
+              "RelativeToolTip": "FitnessCenter\\Views\\Appointments\\Create.cshtml",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAmwEgAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T06:54:03.088Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AppointmentsController.cs",
+              "DocumentMoniker": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Controllers\\AppointmentsController.cs",
+              "RelativeDocumentMoniker": "FitnessCenter\\Controllers\\AppointmentsController.cs",
+              "ToolTip": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Controllers\\AppointmentsController.cs",
+              "RelativeToolTip": "FitnessCenter\\Controllers\\AppointmentsController.cs",
+              "ViewState": "AgIAAAkBAAAAAAAAAAAvwBsBAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T06:35:23.282Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "FitnessCenter\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\smyye\\source\\repos\\FitnessCenter\\FitnessCenter\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeToolTip": "FitnessCenter\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T06:34:56.163Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
