@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - FitnessCenter</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/FitnessCenter.styles.css" asp-append-version="true" />
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+			<div class="container">
+				<!-- Sol taraftaki logo -->
+				<a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+					FitnessCenter
+				</a>
+
+				<!-- Mobil menü butonu -->
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+						aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<!-- Menü içerikleri -->
+				<div class="collapse navbar-collapse" id="mainNavbar">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+						<!-- Herkese görünen: Anasayfa -->
+						<li class="nav-item">
+							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+						</li>
+
+						<!-- Herkese görünen: Hizmetler -->
+						<li class="nav-item">
+							<a class="nav-link" asp-area="" asp-controller="Services" asp-action="Index">
+								Services
+							</a>
+						</li>
+
+						<!-- Herkese görünen: Eğitmenler -->
+						<li class="nav-item">
+							<a class="nav-link" asp-area="" asp-controller="Trainers" asp-action="Index">
+								Trainers
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" asp-area=""  asp-controller="AI" asp-action="Index">
+								AI Öneri
+							</a>
+						</li>
+
+						<!-- Randevu menüsü (Admin + Member için de var) -->
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="appointmentsDropdown" role="button"
+							   data-bs-toggle="dropdown" aria-expanded="false">
+								Appointments
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="appointmentsDropdown">
+								<!-- Herkese: Tüm randevular (sende Index) -->
+								<li>
+									<a class="dropdown-item"
+									   asp-area=""
+									   asp-controller="Appointments"
+									   asp-action="Index">
+										All Appointments
+									</a>
+								</li>
+
+								<!-- Üyenin kendi randevuları -->
+								<li>
+									<a class="dropdown-item"
+									   asp-area=""
+									   asp-controller="Appointments"
+									   asp-action="MyAppointments">
+										My Appointments
+									</a>
+								</li>
+
+								<!-- Sadece Admin'e özel: yeni randevu -->
+								@if (User.IsInRole("Admin"))
+								{
+									<li><hr class="dropdown-divider" /></li>
+									<li>
+										<a class="dropdown-item"
+										   asp-area=""
+										   asp-controller="Appointments"
+										   asp-action="Create">
+											Create Appointment
+										</a>
+									</li>
+								}
+							</ul>
+						</li>
+
+						<!-- Sadece Admin'in gördüğü Admin Panel menüsü -->
+						@if (User.IsInRole("Admin"))
+						{
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button"
+								   data-bs-toggle="dropdown" aria-expanded="false">
+									Admin Panel
+								</a>
+								<ul class="dropdown-menu" aria-labelledby="adminDropdown">
+									<li>
+										<a class="dropdown-item"
+										   asp-area=""
+										   asp-controller="Members"
+										   asp-action="Index">
+											Members
+										</a>
+									</li>
+									<li>
+										<a class="dropdown-item"
+										   asp-area=""
+										   asp-controller="Trainers"
+										   asp-action="Index">
+											Trainers
+										</a>
+									</li>
+									<li>
+										<a class="dropdown-item"
+										   asp-area=""
+										   asp-controller="Services"
+										   asp-action="Index">
+											Services
+										</a>
+									</li>
+									<li>
+										<a class="dropdown-item"
+										   asp-area=""
+										   asp-controller="TrainerAvailabilities"
+										   asp-action="Index">
+											Trainer Availability
+										</a>
+									</li>
+								</ul>
+							</li>
+						}
+					</ul>
+
+					<!-- Sağ taraf: Login / Register / Kullanıcı adı -->
+					<partial name="_LoginPartial" />
+				</div>
+			</div>
+		</nav>
+	</header>
+
+
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+	<footer class="border-top footer text-muted">
+		<div class="container">
+			&copy; 2025 - FitnessCenter - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+		</div>
+	</footer>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

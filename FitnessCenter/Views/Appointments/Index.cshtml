@@ -1,0 +1,67 @@
+﻿@model IEnumerable<FitnessCenter.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Member</th>
+            <th>Trainer</th>
+            <th>Service</th>
+            <th>StartTime</th>
+            <th>EndTime</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Member.FullName</td>
+                <td>@item.Trainer.FirstName</td>
+                <td>@item.Service.Name</td>
+                <td>@item.StartTime</td>
+                <td>@item.EndTime</td>
+                <td>@item.Status</td>
+                <td>
+
+            <td>
+                @item.Status
+
+                @if (User.IsInRole("Admin") && item.Status == AppointmentStatus.Pending)
+                    {
+                        <form asp-action="Approve" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">Onayla</button>
+                        </form>
+
+                        <form asp-action="Reject" method="post" class="d-inline ms-1">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Reddet</button>
+                        </form>
+                    }
+                </td>
+
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <p>
+                            <a asp-action="Create">Create New</a>
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                        </p>
+                    }
+                  </td>
+            </tr>
+        }
+    </tbody>
+</table>

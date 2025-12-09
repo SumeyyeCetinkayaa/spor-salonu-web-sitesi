@@ -1,0 +1,39 @@
+﻿@model IEnumerable<FitnessCenter.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Randevularım";
+}
+
+<h1>Randevularım</h1>
+<hr />
+
+@if (Model == null || !Model.Any())
+{
+    <p>Şu anda sistemde kayıtlı bir randevunuz bulunmamaktadır.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Hizmet</th>
+                <th>Eğitmen</th>
+                <th>Başlangıç</th>
+                <th>Bitiş</th>
+                <th>Durum</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Service?.Name</td>
+                    <td>@item.Trainer?.FirstName @item.Trainer?.LastName</td>
+                    <td>@item.StartTime</td>
+                    <td>@item.EndTime</td>
+                    <td>@item.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

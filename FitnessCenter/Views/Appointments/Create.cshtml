@@ -1,0 +1,86 @@
+﻿@model FitnessCenter.Models.Appointment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Appointment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <!-- MEMBER ALANI -->
+            <div class="form-group">
+                <label asp-for="MemberId" class="control-label"></label>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <!-- ADMIN: Herhangi bir üyeyi seçebilir -->
+                    <select asp-for="MemberId" class="form-control" asp-items="ViewBag.MemberId">
+                        <option value="">Üye seçiniz</option>
+                    </select>
+                }
+                else
+                {
+                    <!-- MEMBER: Kendi Id'si hidden, ekranda sadece adı -->
+                    <input type="hidden" asp-for="MemberId" value="@ViewBag.CurrentMemberId" />
+                    <input class="form-control" value="@ViewBag.CurrentMemberName" disabled />
+                }
+
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+
+            <!-- TRAINER -->
+            <div class="form-group">
+                <label asp-for="TrainerId" class="control-label"></label>
+                <select asp-for="TrainerId" class="form-control" asp-items="ViewBag.TrainerId">
+                    <option value="">Antrenör seçiniz</option>
+                </select>
+                <span asp-validation-for="TrainerId" class="text-danger"></span>
+            </div>
+
+            <!-- SERVICE -->
+            <div class="form-group">
+                <label asp-for="ServiceId" class="control-label"></label>
+                <select asp-for="ServiceId" class="form-control" asp-items="ViewBag.ServiceId">
+                    <option value="">Hizmet seçiniz</option>
+                </select>
+                <span asp-validation-for="ServiceId" class="text-danger"></span>
+            </div>
+
+            <!-- START TIME -->
+            <div class="form-group">
+                <label asp-for="StartTime" class="control-label"></label>
+                <input asp-for="StartTime" class="form-control" type="datetime-local" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+
+            <!-- END TIME -->
+            <div class="form-group">
+                <label asp-for="EndTime" class="control-label"></label>
+                <input asp-for="EndTime" class="form-control" type="datetime-local" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+
+            @* Status alanını burada göstermiyoruz; backend otomatik Pending yapıyor *@
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
