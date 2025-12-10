@@ -1,59 +1,106 @@
 ﻿@model IEnumerable<FitnessCenter.Models.Service>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Hizmetlerimiz";
 }
 
-<h1>Index</h1>
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-3 fw-bold text-uppercase" style="font-family: 'Oswald', sans-serif;">
+            ANTRENMAN <span class="text-danger">PROGRAMLARI</span>
+        </h1>
+        <p class="lead text-white opacity-75">
+            Hedefine en uygun çalışma programını seç ve sınırlarını zorla.
+        </p>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DurationMinutes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DurationMinutes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="mt-4">
+                <a asp-action="Create" class="btn btn-danger btn-lg px-4 fw-bold">
+                    <i class="bi bi-plus-lg"></i> YENİ HİZMET EKLE
+                </a>
+            </div>
+        }
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            // --- AKILLI RESİM SEÇİCİ (Hizmet İsmine Göre) ---
+            string serviceImage = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80"; // Varsayılan Gym
+
+            // Modelinde hizmet isminin "Name" veya "Title" olduğunu varsayıyorum.
+            // Eğer hata alırsan "item.Name" kısmını modeline göre düzelt (örn: item.Title)
+            string serviceName = item.Name ?? "";
+            string searchName = serviceName.ToLowerInvariant();
+
+            if (searchName.Contains("yoga") || searchName.Contains("pilates") || searchName.Contains("esneme"))
+            {
+                serviceImage = "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=600&q=80"; // Yoga
+            }
+            else if (searchName.Contains("kardiyo") || searchName.Contains("cardio") || searchName.Contains("koşu") || searchName.Contains("bisiklet"))
+            {
+                serviceImage = "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=600&q=80"; // Kardiyo
+            }
+            else if (searchName.Contains("boks") || searchName.Contains("box") || searchName.Contains("dövüş") || searchName.Contains("kick"))
+            {
+                serviceImage = "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=600&q=80"; // Boks
+            }
+            else if (searchName.Contains("crossfit") || searchName.Contains("fonksiyonel"))
+            {
+                serviceImage = "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80"; // CrossFit
+            }
+            else if (searchName.Contains("yüzme") || searchName.Contains("havuz") || searchName.Contains("swim"))
+            {
+                serviceImage = "https://images.unsplash.com/photo-1600965962102-96f5dc77786e?w=600&q=80"; // Havuz
+            }
+            else if (searchName.Contains("zumba") || searchName.Contains("dans"))
+            {
+                serviceImage = "https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?w=600&q=80"; // Dans
+            }
+            else if (searchName.Contains("sauna") || searchName.Contains("spa") || searchName.Contains("masaj"))
+            {
+                serviceImage = "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80"; // Spa
+            }
+
+            <div class="col-md-4">
+                <div class="card h-100 bg-dark border-secondary service-card overflow-hidden">
+
+                    <div class="service-img-wrapper position-relative">
+                        <img src="@serviceImage" class="card-img-top service-img" alt="@serviceName">
+
+                        <div class="service-overlay d-flex align-items-center justify-content-center">
+                            <span class="btn btn-outline-light rounded-pill px-4 py-2 fw-bold text-uppercase scale-up-anim">
+                                Detayları Gör
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card-body text-center p-4 d-flex flex-column">
+                        <h3 class="card-title text-uppercase fw-bold text-white mb-3" style="font-family: 'Oswald', sans-serif; letter-spacing: 1px;">
+                            @serviceName
+                        </h3>
+
+                        <p class="card-text text-muted flex-grow-1">
+                            @(item.Description != null && item.Description.Length > 100 ? item.Description.Substring(0, 100) + "..." : item.Description)
+                        </p>
+
+                        <div class="d-grid gap-2 mt-3">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-danger fw-bold text-uppercase">
+                                İNCELE & KAYIT OL
+                            </a>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="btn-group w-100">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">DÜZENLE</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-light">SİL</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

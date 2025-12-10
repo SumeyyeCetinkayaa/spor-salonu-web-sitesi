@@ -1,60 +1,148 @@
 ﻿@model FitnessCenter.Models.Trainer
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = $"{Model.FirstName} {Model.LastName} - Profil";
+
+    // --- RESİM MANTIĞI (Index sayfasıyla AYNI olması için) ---
+    string finalImage = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80"; // Varsayılan
+
+    // Resim Havuzları (Aynı linkler)
+    var boksImages = new List<string> {
+        "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=800&q=80",
+        "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800&q=80",
+        "https://images.unsplash.com/photo-1509563268479-0f004cf3f58b?w=800&q=80",
+        "https://images.unsplash.com/photo-1555597673-b21d5c935865?w=800&q=80"
+    };
+    var fitnessImages = new List<string> {
+        "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80",
+        "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80",
+        "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80",
+        "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=80"
+    };
+    var yogaImages = new List<string> {
+        "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=800&q=80",
+        "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80",
+        "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800&q=80"
+    };
+    var zumbaImages = new List<string> {
+        "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=800&q=80",
+        "https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?w=800&q=80"
+    };
+
+    if (!string.IsNullOrEmpty(Model.Specialization))
+    {
+        string bran = Model.Specialization.ToLowerInvariant();
+        int index = Math.Abs(Model.Id); // ID'ye göre seçim
+
+        if (bran.Contains("boks") || bran.Contains("kick") || bran.Contains("box"))
+        {
+            finalImage = boksImages[index % boksImages.Count];
+        }
+        else if (bran.Contains("vücut") || bran.Contains("body") || bran.Contains("fitness") || bran.Contains("crossfit"))
+        {
+            finalImage = fitnessImages[index % fitnessImages.Count];
+        }
+        else if (bran.Contains("yoga") || bran.Contains("pilates"))
+        {
+            finalImage = yogaImages[index % yogaImages.Count];
+        }
+        else if (bran.Contains("zumba") || bran.Contains("dans"))
+        {
+            finalImage = zumbaImages[index % zumbaImages.Count];
+        }
+    }
 }
 
-<h1>Details</h1>
+<div class="container my-5">
+    <div class="mb-4">
+        <a asp-action="Index" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-arrow-left"></i> EĞİTMENLERE DÖN
+        </a>
+    </div>
 
-<div>
-    <h4>Trainer</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Specialization)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Specialization)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Bio)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Bio)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="row g-5">
+        <div class="col-md-4">
+            <div class="card bg-dark border border-secondary shadow-lg">
+                <div class="position-relative">
+                    <img src="@finalImage" class="card-img-top" alt="@Model.FirstName" style="height: 400px; object-fit: cover;">
+                    <div class="position-absolute bottom-0 start-0 w-100 bg-gradient-to-t p-3">
+                        <span class="badge bg-danger fs-6 rounded-0">@Model.Specialization</span>
+                    </div>
+                </div>
+
+                <div class="card-body p-4 text-center">
+                    <h2 class="fw-bold text-uppercase text-white mb-1" style="font-family: 'Oswald', sans-serif;">
+                        @Model.FirstName @Model.LastName
+                    </h2>
+                    <p class="text-muted small mb-4">Profesyonel Eğitmen</p>
+
+                    <div class="d-grid gap-3 text-start">
+                        <div class="d-flex align-items-center p-3 rounded bg-secondary bg-opacity-10 border border-secondary">
+                            <div class="fs-4 text-danger me-3"><i class="bi bi-envelope"></i> @*Bootstrap Icon*@ &#9993;</div>
+                            <div>
+                                <small class="text-muted d-block">Email</small>
+                                <span class="text-white">@Model.Email</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center p-3 rounded bg-secondary bg-opacity-10 border border-secondary">
+                            <div class="fs-4 text-danger me-3"><i class="bi bi-telephone"></i> @*Bootstrap Icon*@ &#9742;</div>
+                            <div>
+                                <small class="text-muted d-block">Telefon</small>
+                                <span class="text-white">@Model.Phone</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <a asp-controller="Appointments" asp-action="Create" class="btn btn-danger fw-bold text-uppercase py-3">
+                            RANDEVU OLUŞTUR
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="p-5 h-100 rounded bg-dark border border-secondary position-relative overflow-hidden">
+                <div class="position-absolute top-0 end-0 opacity-25 p-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="#333" class="bi bi-quote" viewBox="0 0 16 16">
+                        <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z" />
+                    </svg>
+                </div>
+
+                <h3 class="text-uppercase fw-bold text-danger mb-4" style="font-family: 'Oswald', sans-serif;">Hakkında</h3>
+
+                <p class="lead text-white lh-lg" style="white-space: pre-line;">
+                    @* Eğer Bio boşsa standart metin göster *@
+                    @(string.IsNullOrEmpty(Model.Bio) ? "Eğitmenimiz hakkında henüz detaylı bilgi girilmemiştir. Ancak alanında uzman ve sertifikalı bir profesyoneldir." : Model.Bio)
+                </p>
+
+                <hr class="border-secondary my-5" />
+
+                <div class="row text-center g-4">
+                    <div class="col-4">
+                        <h2 class="display-6 fw-bold text-white">5+</h2>
+                        <span class="text-danger small text-uppercase fw-bold">Yıllık Tecrübe</span>
+                    </div>
+                    <div class="col-4 border-start border-end border-secondary">
+                        <h2 class="display-6 fw-bold text-white">100+</h2>
+                        <span class="text-danger small text-uppercase fw-bold">Mutlu Üye</span>
+                    </div>
+                    <div class="col-4">
+                        <h2 class="display-6 fw-bold text-white">Cert.</h2>
+                        <span class="text-danger small text-uppercase fw-bold">Sertifikalı</span>
+                    </div>
+                </div>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="mt-5 pt-3 border-top border-secondary d-flex justify-content-end gap-2">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Profili Düzenle</a>
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Sil</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>

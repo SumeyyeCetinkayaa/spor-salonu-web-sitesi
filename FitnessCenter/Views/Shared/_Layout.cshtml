@@ -9,152 +9,113 @@
 	<link rel="stylesheet" href="~/FitnessCenter.styles.css" asp-append-version="true" />
 </head>
 <body>
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-			<div class="container">
-				<!-- Sol taraftaki logo -->
-				<a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
-					FitnessCenter
-				</a>
+    <header>
+        @{
+            // Şu an hangi sayfadayız? (Controller ve Action bilgisini alıyoruz)
+            var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
+            var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
 
-				<!-- Mobil menü butonu -->
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-						aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+            // Aktif sınıfını ekleyen küçük bir yardımcı fonksiyon (Local Function)
+            string IsActive(string controller, string action = null)
+            {
+                if (action != null)
+                    return (currentController == controller && currentAction == action) ? "active" : "";
 
-				<!-- Menü içerikleri -->
-				<div class="collapse navbar-collapse" id="mainNavbar">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                return (currentController == controller) ? "active" : "";
+            }
+        }
 
-						<!-- Herkese görünen: Anasayfa -->
-						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-						</li>
+        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    FITNESS<span style="color: var(--vurgu-rengi);">CENTER</span>
+                </a>
 
-						<!-- Herkese görünen: Hizmetler -->
-						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Services" asp-action="Index">
-								Services
-							</a>
-						</li>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-						<!-- Herkese görünen: Eğitmenler -->
-						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Trainers" asp-action="Index">
-								Trainers
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" asp-area=""  asp-controller="AI" asp-action="Index">
-								AI Öneri
-							</a>
-						</li>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-						<!-- Randevu menüsü (Admin + Member için de var) -->
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="appointmentsDropdown" role="button"
-							   data-bs-toggle="dropdown" aria-expanded="false">
-								Appointments
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="appointmentsDropdown">
-								<!-- Herkese: Tüm randevular (sende Index) -->
-								<li>
-									<a class="dropdown-item"
-									   asp-area=""
-									   asp-controller="Appointments"
-									   asp-action="Index">
-										All Appointments
-									</a>
-								</li>
+                        <li class="nav-item">
+                            <a class="nav-link @IsActive("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
 
-								<!-- Üyenin kendi randevuları -->
-								<li>
-									<a class="dropdown-item"
-									   asp-area=""
-									   asp-controller="Appointments"
-									   asp-action="MyAppointments">
-										My Appointments
-									</a>
-								</li>
+                        <li class="nav-item">
+                            <a class="nav-link @IsActive("Services")" asp-area="" asp-controller="Services" asp-action="Index">Services</a>
+                        </li>
 
-								<!-- Sadece Admin'e özel: yeni randevu -->
-								@if (User.IsInRole("Admin"))
-								{
-									<li><hr class="dropdown-divider" /></li>
-									<li>
-										<a class="dropdown-item"
-										   asp-area=""
-										   asp-controller="Appointments"
-										   asp-action="Create">
-											Create Appointment
-										</a>
-									</li>
-								}
-							</ul>
-						</li>
+                        <li class="nav-item">
+                            <a class="nav-link @IsActive("Trainers")" asp-area="" asp-controller="Trainers" asp-action="Index">Trainers</a>
+                        </li>
 
-						<!-- Sadece Admin'in gördüğü Admin Panel menüsü -->
-						@if (User.IsInRole("Admin"))
-						{
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button"
-								   data-bs-toggle="dropdown" aria-expanded="false">
-									Admin Panel
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="adminDropdown">
-									<li>
-										<a class="dropdown-item"
-										   asp-area=""
-										   asp-controller="Members"
-										   asp-action="Index">
-											Members
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item"
-										   asp-area=""
-										   asp-controller="Trainers"
-										   asp-action="Index">
-											Trainers
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item"
-										   asp-area=""
-										   asp-controller="Services"
-										   asp-action="Index">
-											Services
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item"
-										   asp-area=""
-										   asp-controller="TrainerAvailabilities"
-										   asp-action="Index">
-											Trainer Availability
-										</a>
-									</li>
-								</ul>
-							</li>
-						}
-					</ul>
+                        <li class="nav-item">
+                            <a class="nav-link @IsActive("AI")" asp-area="" asp-controller="AI" asp-action="Index">AI Öneri</a>
+                        </li>
 
-					<!-- Sağ taraf: Login / Register / Kullanıcı adı -->
-					<partial name="_LoginPartial" />
-				</div>
-			</div>
-		</nav>
-	</header>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @IsActive("Appointments")" href="#" id="appointmentsDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Appointments
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="appointmentsDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Appointments" asp-action="Index">All Appointments</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Appointments" asp-action="MyAppointments">My Appointments</a>
+                                </li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Appointments" asp-action="Create">Create Appointment</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            var adminActive = (currentController == "Members" || currentController == "TrainerAvailabilities") ? "active" : "";
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle @adminActive" href="#" id="adminDropdown" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin Panel
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Members" asp-action="Index">Members</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Trainers" asp-action="Index">Trainers</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Services" asp-action="Index">Services</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="TrainerAvailabilities" asp-action="Index">Trainer Availability</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
 
 
-	<div class="container">
-		<main role="main" class="pb-3">
-			@RenderBody()
-		</main>
-	</div>
+	<main role="main" class="pb-3">
+		@RenderBody()
+	</main>
 
-	<footer class="border-top footer text-muted">
+	<footer class="border-top footer">
 		<div class="container">
 			&copy; 2025 - FitnessCenter - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 		</div>

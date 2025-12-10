@@ -1,22 +1,339 @@
+/* =========================================================
+   1. FONT ÝTHALATI (GOOGLE FONTS) - EN ÜSTE YAPIÞTIR
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;700&display=swap');
+
+/* =========================================================
+   2. AYARLAR (DEÐÝÞKENLER)
+   ========================================================= */
+:root {
+    /* Renkler (Ayný kalýyor) */
+    --arkaplan-ana: #000000;
+    --arkaplan-kutu: #1A1A1A;
+    --vurgu-rengi: #E63946;
+    --vurgu-hover: #D62828;
+    --yazi-ana: #FFFFFF;
+    --yazi-silik: #B3B3B3;
+    /* Font Ayarlarý */
+    --font-baslik: 'Oswald', sans-serif; /* Sert Baþlýklar */
+    --font-metin: 'Roboto', sans-serif; /* Okunaklý Metinler */
+}
+
+/* =========================================================
+   3. GENEL SIFIRLAMA & FONT UYGULAMASI
+   ========================================================= */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* Tüm siteye "Roboto" fontunu yayýyoruz */
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: var(--arkaplan-ana) !important;
+    color: var(--yazi-ana) !important;
+    font-family: var(--font-metin); /* ARTIK ROBOTO KULLANIYOR */
+    font-weight: 400;
+}
+
+/* Baþlýklarý (H1, H2, Navbar, Butonlar) "Oswald" yapýyoruz */
+h1, h2, h3, h4, h5, h6, .navbar-brand, .btn, .nav-link {
+    font-family: var(--font-baslik); /* ARTIK OSWALD KULLANIYOR */
+    text-transform: uppercase; /* Baþlýklar hep BÜYÜK HARF olsun (Daha havalý) */
+    letter-spacing: 1px; /* Harfler birbirine yapýþmasýn */
+}
+
+/* Zorla beyaz yapma kuralýmýz (Aynen kalsýn) */
+h1, h2, h3, h4, h5, h6, p, span, li, div {
+    color: var(--yazi-ana);
+}
+
+/* ... Geri kalan CSS kodlarýn (Linkler, Navbar, Footer vs.) ayný kalabilir ... */
+
+/* 3. LÝNKLER */
+a {
+    color: var(--vurgu-rengi);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+    a:hover {
+        color: #FFF; /* Üzerine gelince beyaz olsun */
+        text-shadow: 0 0 10px var(--vurgu-rengi); /* Kýrmýzý parlasýn */
+    }
+
+/* 4. NAVBAR (ÜST MENÜ) */
+.navbar {
+    background-color: var(--arkaplan-kutu) !important;
+    border-bottom: 2px solid var(--vurgu-rengi); /* Altýna kýrmýzý çizgi */
+    box-shadow: 0 4px 10px rgba(230, 57, 70, 0.2); /* Hafif kýrmýzý gölge */
+}
+.navbar-brand {
+    color: var(--vurgu-rengi) !important; /* Burayý #FFF yerine deðiþkenimiz yaptýk */
+    font-weight: 900; /* Daha kalýn font */
+    text-transform: uppercase; /* Hepsi büyük harf olsun */
+    letter-spacing: 1px;
+    font-size: 1.5rem; /* Biraz büyütelim */
+    text-shadow: 0 0 10px rgba(230, 57, 70, 0.4); /* Hafif kýrmýzý parlama */
+}
+
+    /* Mouse ile üzerine gelince beyaz olsun (Ýsteðe baðlý) */
+    .navbar-brand:hover {
+        color: #FFF !important;
+    }
+
+    .navbar-brand span {
+        color: var(--vurgu-rengi);
+    }
+/* Ýstersen logonun bir kýsmýný kýrmýzý yapabilirsin */
+
+.nav-link {
+    color: var(--yazi-ana) !important;
+    font-weight: 500;
+}
+
+    .nav-link:hover, .nav-link.active {
+        color: var(--vurgu-rengi) !important;
+    }
+
+/* 5. DROPDOWN (AÇILIR MENÜ) */
+.dropdown-menu {
+    background-color: var(--arkaplan-kutu) !important;
+    border: 1px solid var(--vurgu-rengi);
+}
+
+.dropdown-item {
+    color: var(--yazi-ana) !important; /* Linkler beyaz */
+}
+
+    .dropdown-item:hover {
+        background-color: var(--vurgu-rengi) !important; /* Arkaplan Kýrmýzý */
+        color: #FFF !important; /* Yazý Beyaz */
+    }
+
+.dropdown-divider {
+    border-top: 1px solid #333;
+}
+
+/* 6. FOOTER (ALT KISIM) */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    background-color: var(--arkaplan-kutu);
+    border-top: 1px solid #333;
+    color: var(--yazi-silik);
+}
+
+/* 7. BUTONLAR (Kýrmýzý Tema) */
+.btn-primary {
+    background-color: var(--vurgu-rengi);
+    border-color: var(--vurgu-rengi);
+    color: #FFF; /* Kýrmýzý üstüne BEYAZ yazý (Neon'da siyahtý, burada beyaz daha iyi) */
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px 20px;
+}
+
+    .btn-primary:hover {
+        background-color: var(--vurgu-hover);
+        border-color: var(--vurgu-hover);
+        box-shadow: 0 0 15px rgba(230, 57, 70, 0.5); /* Kýrmýzý parlama */
+    }
+
+/* 8. FORMLAR (Inputlar görünmez olmasýn diye) */
+.form-control {
+    background-color: #222 !important; /* Input içi koyu gri */
+    border: 1px solid #444;
+    color: #FFF !important; /* Yazýlan yazý beyaz */
+}
+
+    .form-control:focus {
+        background-color: #222 !important;
+        border-color: var(--vurgu-rengi);
+        color: #FFF !important;
+        box-shadow: 0 0 0 0.25rem rgba(230, 57, 70, 0.25);
+    }
+
+/* Tablolar için (Eðer randevu tablosu varsa) */
+.table {
+    color: var(--yazi-ana) !important;
+    --bs-table-color: var(--yazi-ana);
+    --bs-table-bg: transparent;
+}
+/* ================= HERO SECTION (ANA SAYFA) ================= */
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 85vh; /* Ekranýn %85'ini kaplasýn */
+    background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1920&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Siyah Perde (Resmin üzerine atýlan siyah tül) */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* %70 Siyahlýk */
+    z-index: 1;
+}
+
+/* Yazýlarýn öne çýkmasý için */
+.hero-content {
+    position: relative;
+    z-index: 2; /* Perdenin üstüne çýkar */
+}
+
+.text-danger {
+    color: var(--vurgu-rengi) !important; /* Senin kýrmýzý rengin */
+}
+
+/* Kutularýn üzerine gelince parlama efekti */
+.hover-effect {
+    transition: 0.3s;
+    background-color: #111;
+}
+
+    .hover-effect:hover {
+        transform: translateY(-5px); /* Biraz yukarý zýplasýn */
+        border-color: var(--vurgu-rengi) !important; /* Kenarlarý kýzarsýn */
+        box-shadow: 0 0 15px rgba(230, 57, 70, 0.3);
+    }
+
+/* Kutularýn (Info Section) Tasarýmý */
+.p-4.border {
+    background-color: var(--arkaplan-kutu); /* Koyu gri zemin (siyah deðil) */
+    border: 1px solid #333 !important; /* Çizgiyi biraz inceltelim */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Hafif gölge ekleyelim */
+}
+
+/* Üzerine gelince (Hover) */
+.hover-effect:hover {
+    transform: translateY(-10px); /* Daha yukarý zýplasýn */
+    background-color: #222; /* Rengi biraz açýlsýn */
+    border-color: var(--vurgu-rengi) !important; /* Kenarý kýrmýzý olsun */
+    box-shadow: 0 0 20px rgba(230, 57, 70, 0.4); /* Kýrmýzý parlama */
+}
+
+/* site.css dosyasýnýn en altýna */
+
+/* EÐÝTMEN KARTLARI */
+.trainer-card {
+    transition: all 0.4s ease;
+    border: 1px solid #333 !important;
+    overflow: hidden;
+    background-color: #1a1a1a !important; /* Kart rengi */
+}
+
+    .trainer-card:hover {
+        transform: translateY(-10px); /* Yukarý kalkma efekti */
+        border-color: var(--vurgu-rengi) !important; /* Kenar kýrmýzý olsun */
+        box-shadow: 0 10px 30px rgba(230, 57, 70, 0.4); /* Kýrmýzý gölge */
+    }
+
+.card-img-top-wrapper {
+    height: 300px; /* Resim yüksekliði sabit kalsýn */
+    overflow: hidden;
+}
+
+.trainer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%); /* Siyah beyaz */
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.trainer-card:hover .trainer-img {
+    transform: scale(1.1); /* Zoom yap */
+    filter: grayscale(0%); /* Renklendir */
+}
+
+/* Ana Sayfa Kutucuklarý */
+.info-box {
+    background-color: #111; /* Siyah deðil, çok koyu gri */
+    border: 1px solid #333;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+    .info-box:hover {
+        transform: translateY(-10px);
+        border-color: var(--vurgu-rengi); /* Kýrmýzý kenarlýk */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+.icon-box svg {
+    filter: drop-shadow(0 0 5px rgba(230, 57, 70, 0.5)); /* Ýkon parlasýn */
+}
+/* ================= HÝZMETLER (SERVICES) ================= */
+
+.service-card {
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    border: 1px solid #333 !important;
+}
+
+    .service-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--vurgu-rengi) !important;
+        box-shadow: 0 10px 30px rgba(230, 57, 70, 0.2);
+    }
+
+.service-img-wrapper {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+}
+
+.service-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+/* Hover Efektleri */
+.service-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(230, 57, 70, 0.8); /* Kýrmýzý þeffaf perde */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.service-card:hover .service-overlay {
+    opacity: 1; /* Üzerine gelince perdeyi aç */
+}
+
+.service-card:hover .service-img {
+    transform: scale(1.1); /* Arkadaki resmi büyüt */
+}
+
+.scale-up-anim {
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-card:hover .scale-up-anim {
+    transform: scale(1); /* Buton zýplayarak gelir */
 }

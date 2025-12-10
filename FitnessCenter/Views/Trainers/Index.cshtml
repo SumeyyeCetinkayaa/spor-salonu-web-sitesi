@@ -1,85 +1,117 @@
 ﻿@model IEnumerable<FitnessCenter.Models.Trainer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Eğitmenlerimiz";
 }
 
-<h1>Trainers</h1>
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-3 fw-bold text-uppercase" style="font-family: 'Oswald', sans-serif;">
+            UZMAN <span class="text-danger">KADRO</span>
+        </h1>
+        <p class="lead text-white opacity-75">Branşında profesyonel eğitmenlerimizle tanışın.</p>
 
-<p>
-    @* Sadece Admin yeni eğitmen ekleyebilsin *@
-    @if (User.IsInRole("Admin"))
-    {
-        <a asp-action="Create" class="btn btn-primary">Create New</a>
-    }
-</p>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="mt-4">
+                <a asp-action="Create" class="btn btn-danger btn-lg px-4 fw-bold">YENİ EĞİTMEN EKLE</a>
+            </div>
+        }
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Specialization)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="row g-4">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Specialization)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Bio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+            // --- GELİŞMİŞ RESİM HAVUZU (Garanti Linkler) ---
+            string finalImage = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80"; // Varsayılan
 
-                    @* Edit / Delete sadece Admin *@
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <span> | </span>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <span> | </span>
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    }
-                </td>
+            // 1. KICK BOKS & BOKS HAVUZU (Linkler Yenilendi)
+            var boksImages = new List<string> {
+                "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&q=80", // Siyah beyaz boksör
+                "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=600&q=80", // Antrenman
+                "https://images.unsplash.com/photo-1509563268479-0f004cf3f58b?w=600&q=80", // Mavi eldivenler
+                "https://images.unsplash.com/photo-1555597673-b21d5c935865?w=600&q=80"  // Ring ve ışıklar
+                };
 
-            </tr>
+            // 2. FITNESS & VÜCUT GELİŞTİRME
+            var fitnessImages = new List<string> {
+                "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=80", // Halterci
+                "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80", // Genel Gym
+                "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80", // Kadın Dumbbell
+                "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80"  // Erkek Kol Kası
+                };
+
+            // 3. YOGA & PILATES
+            var yogaImages = new List<string> {
+                "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=600&q=80", // Yoga Matı
+                "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80", // Grup Esneme
+                "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=600&q=80"  // Tekli Duruş
+                };
+
+            // 4. ZUMBA & DANS
+            var zumbaImages = new List<string> {
+                "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=600&q=80", // Dans Grubu
+                "https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?w=600&q=80"  // Portre
+                };
+
+            // --- SEÇİM MANTIĞI ---
+            if (!string.IsNullOrEmpty(item.Specialization))
+            {
+                // Türkçe karakter sorunu olmaması için "ToLowerInvariant" kullandım
+                string bran = item.Specialization.ToLowerInvariant();
+
+                if (bran.Contains("boks") || bran.Contains("kick") || bran.Contains("box"))
+                {
+                    finalImage = boksImages[Math.Abs(item.Id) % boksImages.Count];
+                }
+                else if (bran.Contains("vücut") || bran.Contains("body") || bran.Contains("fitness") || bran.Contains("crossfit"))
+                {
+                    finalImage = fitnessImages[Math.Abs(item.Id) % fitnessImages.Count];
+                }
+                else if (bran.Contains("yoga") || bran.Contains("pilates"))
+                {
+                    finalImage = yogaImages[Math.Abs(item.Id) % yogaImages.Count];
+                }
+                else if (bran.Contains("zumba") || bran.Contains("dans"))
+                {
+                    finalImage = zumbaImages[Math.Abs(item.Id) % zumbaImages.Count];
+                }
+            }
+
+            <div class="col-md-4">
+                <div class="card h-100 bg-dark border-secondary trainer-card position-relative">
+
+                    <div class="card-img-top-wrapper">
+                        <img src="@finalImage" class="card-img-top trainer-img" alt="@item.Specialization">
+                    </div>
+
+                    <div class="card-body text-center d-flex flex-column">
+                        <h3 class="card-title text-uppercase fw-bold text-white mb-1" style="font-family: 'Oswald', sans-serif;">
+                            @item.FirstName @item.LastName
+                        </h3>
+
+                        <p class="text-danger fw-bold text-uppercase small mb-3">
+                            @Html.DisplayFor(modelItem => item.Specialization)
+                        </p>
+
+                        <p class="card-text text-muted small flex-grow-1">
+                            @(item.Bio != null && item.Bio.Length > 80 ? item.Bio.Substring(0, 80) + "..." : item.Bio)
+                        </p>
+
+                        <div class="d-grid gap-2 mt-3">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-light btn-sm">Profili İncele</a>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="btn-group">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">Düzenle</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">Sil</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>

@@ -1,7 +1,6 @@
 using FitnessCenter.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using FitnessCenter.AIService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,8 +31,9 @@ builder.Services
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-// AI Service kaydı (OpenAIRecommendationService)
-builder.Services.AddScoped<IAIRecommendationService, OpenAIRecommendationService>();
+
+builder.Services.AddHttpClient();
+
 
 var app = builder.Build();
 

@@ -1,21 +1,39 @@
 ﻿@page
 @model LogoutModel
 @{
-    ViewData["Title"] = "Log out";
+    ViewData["Title"] = "Çıkış Yap";
 }
 
-<header>
-    <h1>@ViewData["Title"]</h1>
-    @{
-        if (User.Identity?.IsAuthenticated ?? false)
-        {
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
-            </form>
-        }
-        else
-        {
-            <p>You have successfully logged out of the application.</p>
-        }
-    }
-</header>
+<div class="container mt-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="p-5 rounded bg-dark border border-secondary shadow">
+
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <h1 class="display-5 text-danger fw-bold text-uppercase mb-3" style="font-family: 'Oswald', sans-serif;">
+                        ÇIKIŞ YAPILIYOR
+                    </h1>
+                    <p class="lead text-white mb-4">Hesabınızdan çıkış yapmak üzeresiniz.</p>
+
+                    <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                        <button type="submit" class="btn btn-outline-danger btn-lg px-5 fw-bold">
+                            OTURUMU KAPAT
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <div class="mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#E63946" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-white mb-3">BAŞARIYLA ÇIKIŞ YAPTINIZ</h2>
+                    <p class="text-muted">Tekrar görüşmek üzere.</p>
+                    <a href="/" class="btn btn-light mt-3">Ana Sayfaya Dön</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
