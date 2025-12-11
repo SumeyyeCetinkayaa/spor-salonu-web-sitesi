@@ -1,67 +1,160 @@
 ﻿@model IEnumerable<FitnessCenter.Models.Appointment>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Randevular";
 }
 
-<h1>Index</h1>
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-uppercase text-danger" style="font-family: 'Oswald', sans-serif;">
+                @(User.IsInRole("Admin") ? "RANDEVU YÖNETİMİ" : "RANDEVULARIM")
+            </h2>
+            <p class="text-muted mb-0">
+                @(User.IsInRole("Admin") ? "Tüm üyelerin randevu taleplerini buradan yönetebilirsiniz." : "Geçmiş ve gelecek antrenman programınız.")
+            </p>
+        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Member</th>
-            <th>Trainer</th>
-            <th>Service</th>
-            <th>StartTime</th>
-            <th>EndTime</th>
-            <th>Status</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+        <a asp-action="Create" class="btn btn-danger fw-bold text-uppercase px-4 shadow">
+            <i class="bi bi-plus-lg"></i> YENİ RANDEVU
+        </a>
+    </div>
+
+    <div class="card bg-dark border border-secondary shadow-lg overflow-hidden">
+        @if (!Model.Any())
         {
-            <tr>
-                <td>@item.Member.FullName</td>
-                <td>@item.Trainer.FirstName</td>
-                <td>@item.Service.Name</td>
-                <td>@item.StartTime</td>
-                <td>@item.EndTime</td>
-                <td>@item.Status</td>
-                <td>
-
-            <td>
-                @item.Status
-
-                @if (User.IsInRole("Admin") && item.Status == AppointmentStatus.Pending)
-                    {
-                        <form asp-action="Approve" method="post" class="d-inline">
-                            <input type="hidden" name="id" value="@item.Id" />
-                            <button type="submit" class="btn btn-success btn-sm">Onayla</button>
-                        </form>
-
-                        <form asp-action="Reject" method="post" class="d-inline ms-1">
-                            <input type="hidden" name="id" value="@item.Id" />
-                            <button type="submit" class="btn btn-danger btn-sm">Reddet</button>
-                        </form>
-                    }
-                </td>
-
-
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <p>
-                            <a asp-action="Create">Create New</a>
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-
-                        </p>
-                    }
-                  </td>
-            </tr>
+            <div class="text-center p-5">
+                <div class="text-muted fs-1 mb-3"><i class="bi bi-calendar-x"></i></div>
+                <h4 class="text-white">Henüz Randevu Yok</h4>
+                <p class="text-muted">Yeni bir antrenman planlamak için butona tıklayın.</p>
+            </div>
         }
-    </tbody>
-</table>
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0 align-middle">
+                    <thead class="bg-secondary text-uppercase small">
+                        <tr>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <th class="py-3 ps-4 text-muted">ÜYE</th>
+                                <th class="py-3 text-muted">EĞİTMEN</th>
+                            }
+                            else
+                            {
+                                <th class="py-3 ps-4 text-muted">EĞİTMEN</th>
+                            }
+
+                            <th class="py-3 text-muted">HİZMET</th>
+                            <th class="py-3 text-muted">TARİH & SAAT</th>
+                            <th class="py-3 text-muted text-center">DURUM</th>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <th class="py-3 text-muted text-end pe-4">İŞLEMLER</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center text-white me-3"
+                                                 style="width: 40px; height: 40px; font-weight: bold;">
+                                                @item.Member?.FirstName?.Substring(0, 1)@item.Member?.LastName?.Substring(0, 1)
+                                            </div>
+                                            <div>
+                                                <div class="fw-bold text-white">@item.Member?.FirstName @item.Member?.LastName</div>
+                                                <div class="small text-muted">@item.Member?.Email</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-info fw-bold">@item.Trainer?.FirstName @item.Trainer?.LastName</span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded-circle bg-danger d-flex align-items-center justify-content-center text-white me-3"
+                                                 style="width: 40px; height: 40px;">
+                                                <i class="bi bi-person-fill"></i>
+                                            </div>
+                                            <div class="fw-bold text-white">@item.Trainer?.FirstName @item.Trainer?.LastName</div>
+                                        </div>
+                                    </td>
+                                }
+
+                                <td>
+                                    <span class="badge bg-secondary bg-opacity-25 text-light border border-secondary px-3 py-2">
+                                        @item.Service?.Name
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="text-white">@item.StartTime.ToString("dd MMMM yyyy")</div>
+                                    <div class="small text-muted">@item.StartTime.ToString("HH:mm") - @item.EndTime.ToString("HH:mm")</div>
+                                </td>
+
+                                <td class="text-center">
+                                    @if (item.Status == "Onaylandı" || item.Status == "Approved")
+                                    {
+                                        <span class="badge bg-success bg-opacity-75 text-white px-3 py-2 rounded-pill">
+                                            <i class="bi bi-check-circle-fill me-1"></i> ONAYLANDI
+                                        </span>
+                                    }
+                                    else if (item.Status == "Reddedildi" || item.Status == "Rejected")
+                                    {
+                                        <span class="badge bg-danger bg-opacity-75 text-white px-3 py-2 rounded-pill">
+                                            <i class="bi bi-x-circle-fill me-1"></i> REDDEDİLDİ
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">
+                                            <i class="bi bi-hourglass-split me-1"></i> BEKLEMEDE
+                                        </span>
+                                    }
+                                </td>
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group" role="group">
+                                            @if (item.Status != "Onaylandı")
+                                            {
+                                                <form asp-action="Approve" asp-route-id="@item.Id" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-outline-success" title="Onayla">
+                                                        <i class="bi bi-check-lg"></i>
+                                                    </button>
+                                                </form>
+                                            }
+
+                                            @if (item.Status != "Reddedildi")
+                                            {
+                                                <form asp-action="Reject" asp-route-id="@item.Id" method="post" class="d-inline ms-1">
+                                                    <button type="submit" class="btn btn-sm btn-outline-warning" title="Reddet">
+                                                        <i class="bi bi-x-lg"></i>
+                                                    </button>
+                                                </form>
+                                            }
+
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger ms-1" title="Sil">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

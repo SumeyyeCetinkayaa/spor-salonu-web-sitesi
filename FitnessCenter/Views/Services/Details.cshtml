@@ -1,48 +1,114 @@
 ﻿@model FitnessCenter.Models.Service
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = $"{Model.Name} - Hizmet Detayı";
+
+    // --- AKILLI RESİM SEÇİCİ (Index sayfasıyla AYNI) ---
+    // Hizmetin ismine bakıp ona uygun arka plan resmini seçiyoruz.
+    string serviceImage = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80"; // Varsayılan Gym
+
+    if (Model.Name != null)
+    {
+        string searchName = Model.Name.ToLowerInvariant();
+
+        if (searchName.Contains("yoga") || searchName.Contains("pilates") || searchName.Contains("esneme"))
+        {
+            serviceImage = "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=800&q=80";
+        }
+        else if (searchName.Contains("kardiyo") || searchName.Contains("cardio") || searchName.Contains("koşu"))
+        {
+            serviceImage = "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800&q=80";
+        }
+        else if (searchName.Contains("boks") || searchName.Contains("box") || searchName.Contains("kick"))
+        {
+            serviceImage = "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800&q=80";
+        }
+        else if (searchName.Contains("crossfit") || searchName.Contains("fonksiyonel"))
+        {
+            serviceImage = "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80";
+        }
+        else if (searchName.Contains("yüzme") || searchName.Contains("havuz"))
+        {
+            serviceImage = "https://images.unsplash.com/photo-1600965962102-96f5dc77786e?w=800&q=80";
+        }
+        else if (searchName.Contains("zumba") || searchName.Contains("dans"))
+        {
+            serviceImage = "https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?w=800&q=80";
+        }
+        else if (searchName.Contains("sauna") || searchName.Contains("masaj"))
+        {
+            serviceImage = "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80";
+        }
+    }
 }
 
-<h1>Details</h1>
+<div class="container my-5">
+    <div class="mb-4">
+        <a asp-action="Index" class="btn btn-outline-light btn-sm px-3">
+            <i class="bi bi-arrow-left"></i> LİSTEYE DÖN
+        </a>
+    </div>
 
-<div>
-    <h4>Service</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DurationMinutes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DurationMinutes)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="row g-5 align-items-center">
+        <div class="col-lg-6">
+            <div class="position-relative border border-secondary p-2 rounded bg-dark shadow-lg">
+                <img src="@serviceImage" class="img-fluid rounded" alt="@Model.Name" style="width: 100%; height: 400px; object-fit: cover; filter: brightness(0.9);">
+
+                <div class="position-absolute top-0 start-0 m-4">
+                    @if (Model.IsActive)
+                    {
+                        <span class="badge bg-success px-3 py-2 fs-6 shadow">AKTİF HİZMET</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary px-3 py-2 fs-6 shadow">PASİF</span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="ps-lg-4">
+                <h1 class="display-3 fw-bold text-uppercase text-danger mb-3" style="font-family: 'Oswald', sans-serif;">
+                    @Model.Name
+                </h1>
+
+                <p class="lead text-white lh-lg mb-4 opacity-75">
+                    @Model.Description
+                </p>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <div class="p-3 bg-dark border border-secondary rounded text-center h-100">
+                            <div class="text-danger fs-3 mb-1"><i class="bi bi-clock-history"></i> @* Saat İkonu *@ &#x23F1;</div>
+                            <h5 class="text-white text-uppercase fw-bold m-0">SÜRE</h5>
+                            <span class="text-muted">@Model.DurationMinutes Dakika</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="p-3 bg-dark border border-secondary rounded text-center h-100">
+                            <div class="text-danger fs-3 mb-1"><i class="bi bi-wallet2"></i> @* Cüzdan İkonu *@ &#x1F4B3;</div>
+                            <h5 class="text-white text-uppercase fw-bold m-0">FİYAT</h5>
+                            <span class="text-white fs-5 fw-bold">@Model.Price.ToString("C2")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-3">
+                    <a asp-controller="Appointments" asp-action="Create" class="btn btn-danger btn-lg fw-bold text-uppercase py-3 shadow-lg">
+                        HEMEN KAYIT OL
+                    </a>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="d-flex gap-2">
+                            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-warning w-100 fw-bold">DÜZENLE</a>
+                            <a asp-action="Index" class="btn btn-outline-secondary w-100 fw-bold">LİSTE</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
