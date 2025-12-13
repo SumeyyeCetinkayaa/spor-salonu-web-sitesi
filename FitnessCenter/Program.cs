@@ -1,6 +1,7 @@
 using FitnessCenter.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using FitnessCenter.AIService; // <<<< BU SATIRI EN ÜSTE EKLE (Dosya yolun farklıysa düzelt)
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +16,6 @@ builder.Services
     .AddDefaultIdentity<IdentityUser>(options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
-
-        // Ödevdeki "sau" şifresine uygun kurallar
         options.Password.RequiredLength = 3;
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequireDigit = false;
@@ -27,12 +26,14 @@ builder.Services
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// MVC + Razor Pages (Identity UI için gerekli)
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-
 builder.Services.AddHttpClient();
+
+// <<<< BURAYI EKLE: Gemini Servisini Sisteme Tanıtıyoruz >>>>
+builder.Services.AddScoped<IAIRecommendationService, GeminiRecommendationService>();
+// <<<< EKLEME BİTTİ >>>>
 
 
 var app = builder.Build();
