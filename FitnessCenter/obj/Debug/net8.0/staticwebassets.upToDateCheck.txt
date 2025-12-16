@@ -1,5 +1,17 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\images\trainers\acelya.png
+wwwroot\images\trainers\adil.png
+wwwroot\images\trainers\cansu.png
+wwwroot\images\trainers\derya.png
+wwwroot\images\trainers\dogan.png
+wwwroot\images\trainers\eda.png
+wwwroot\images\trainers\erkan.png
+wwwroot\images\trainers\fikriye.png
+wwwroot\images\trainers\sertap.png
+wwwroot\images\trainers\talha.png
+wwwroot\images\trainers\zafer.png
+wwwroot\images\trainers\zehra.png
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
