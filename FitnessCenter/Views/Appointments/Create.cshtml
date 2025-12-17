@@ -1,84 +1,79 @@
 ﻿@model FitnessCenter.Models.Appointment
 
 @{
-    ViewData["Title"] = "Randevu Oluştur";
+    ViewData["Title"] = "Yeni Randevu Oluştur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-
-            <div class="mb-3">
-                <a asp-action="Index" class="text-decoration-none text-muted hover-white">
-                    <i class="bi bi-arrow-left"></i> Listeye Dön
-                </a>
-            </div>
-
-            <div class="card bg-dark border border-secondary shadow-lg">
-                <div class="card-header border-bottom border-secondary text-center pt-4 pb-3">
-                    <h2 class="fw-bold text-uppercase text-danger" style="font-family: 'Oswald', sans-serif;">
-                        YENİ RANDEVU
-                    </h2>
-                    <p class="text-muted small mb-0">Antrenmanını planla, hedefine yaklaş.</p>
+            <div class="card bg-dark text-white border-secondary shadow-lg">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="card-title text-uppercase fw-bold mb-0 text-center">
+                        <i class="bi bi-calendar-plus"></i> Yeni Randevu
+                    </h3>
                 </div>
-
                 <div class="card-body p-4">
+
                     <form asp-action="Create">
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-                        <div class="mb-3">
-                            <label asp-for="MemberId" class="form-label text-white fw-bold">Üye Bilgisi</label>
-
-                            @if (User.IsInRole("Admin"))
-                            {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="mb-3">
+                                <label asp-for="MemberId" class="form-label text-white-50">Üye Seçimi</label>
                                 <select asp-for="MemberId" class="form-select bg-secondary text-white border-0" asp-items="ViewBag.MemberId">
                                     <option value="">-- Üye Seçiniz --</option>
                                 </select>
-                            }
-                            else
-                            {
-                                <input type="hidden" asp-for="MemberId" value="@ViewBag.CurrentMemberId" />
-                                <input class="form-control bg-dark text-muted border-secondary" value="@ViewBag.CurrentMemberName" disabled />
-                            }
-                            <span asp-validation-for="MemberId" class="text-danger small"></span>
-                        </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <input type="hidden" asp-for="MemberId" value="@ViewData["CurrentMemberId"]" />
+                            <div class="mb-3 text-center">
+                                <span class="badge bg-secondary fs-6">
+                                    Randevu Sahibi: @ViewData["CurrentMemberName"]
+                                </span>
+                            </div>
+                        }
 
                         <div class="mb-3">
-                            <label asp-for="TrainerId" class="form-label text-white fw-bold">Eğitmen</label>
-                            <select asp-for="TrainerId" class="form-select bg-secondary text-white border-0" asp-items="ViewBag.TrainerId">
-                                <option value="">-- Eğitmen Seçiniz --</option>
-                            </select>
-                            <span asp-validation-for="TrainerId" class="text-danger small"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="ServiceId" class="form-label text-white fw-bold">Hizmet / Ders</label>
-                            <select asp-for="ServiceId" class="form-select bg-secondary text-white border-0" asp-items="ViewBag.ServiceId">
-                                <option value="">-- Hizmet Seçiniz --</option>
+                            <label asp-for="ServiceId" class="form-label text-white-50">Hizmet / Ders</label>
+                            <select id="ServiceDropdown" asp-for="ServiceId" class="form-select bg-dark text-white border-secondary" asp-items="ViewBag.ServiceId">
+                                <option value="">-- Önce Ders Seçiniz --</option>
                             </select>
                             <span asp-validation-for="ServiceId" class="text-danger small"></span>
                         </div>
 
+                        <div class="mb-3">
+                            <label asp-for="TrainerId" class="form-label text-white-50">Eğitmen</label>
+                            <select id="TrainerDropdown" asp-for="TrainerId" class="form-select bg-dark text-white border-secondary" asp-items="ViewBag.TrainerId">
+                                <option value="">-- Eğitmen Seçiniz --</option>
+                            </select>
+                            <span asp-validation-for="TrainerId" class="text-danger small"></span>
+                            <small id="trainerHelp" class="text-muted d-none">Bu dersi veren eğitmenler listelendi.</small>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label asp-for="StartTime" class="form-label text-white fw-bold">Başlangıç</label>
-                                <input asp-for="StartTime" class="form-control bg-secondary text-white border-0" type="datetime-local" style="color-scheme: dark;" />
+                                <label asp-for="StartTime" class="form-label text-white-50">Başlangıç</label>
+                                <input asp-for="StartTime" class="form-control bg-dark text-white border-secondary" type="datetime-local" />
                                 <span asp-validation-for="StartTime" class="text-danger small"></span>
                             </div>
-
                             <div class="col-md-6 mb-3">
-                                <label asp-for="EndTime" class="form-label text-white fw-bold">Bitiş</label>
-                                <input asp-for="EndTime" class="form-control bg-secondary text-white border-0" type="datetime-local" style="color-scheme: dark;" />
+                                <label asp-for="EndTime" class="form-label text-white-50">Bitiş</label>
+                                <input asp-for="EndTime" class="form-control bg-dark text-white border-secondary" type="datetime-local" />
                                 <span asp-validation-for="EndTime" class="text-danger small"></span>
                             </div>
                         </div>
 
-                        <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-danger btn-lg fw-bold text-uppercase shadow">
-                                RANDEVUYU ONAYLA
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-danger fw-bold text-uppercase py-2">
+                                Randevuyu Onayla
                             </button>
+                            <a asp-action="Index" class="btn btn-outline-light btn-sm">Geri Dön</a>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -86,8 +81,212 @@
     </div>
 </div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+<script>
+    // Controller'dan gelen verileri JSON olarak JS değişkenine alıyoruz
+    var trainersData = @Html.Raw(Json.Serialize(ViewBag.TrainersData));
+    var servicesData = @Html.Raw(Json.Serialize(ViewBag.ServicesData));
+
+    // Elementleri seç
+    var serviceSelect = document.getElementById("ServiceDropdown");
+    var trainerSelect = document.getElementById("TrainerDropdown");
+    var trainerHelp = document.getElementById("trainerHelp");
+
+    // 1. DERS SEÇİLİNCE: Eğitmenleri Filtrele
+    serviceSelect.addEventListener("change", function() {
+        var selectedServiceId = this.value;
+        var selectedServiceName = "";
+
+        // Seçilen dersin ismini bul (ID'den isme git)
+        // Çünkü Trainer tablosunda 'Specialization' string olarak tutuluyor (Kick Boks gibi)
+        for (var i = 0; i < servicesData.length; i++) {
+            if (servicesData[i].id == selectedServiceId) {
+                selectedServiceName = servicesData[i].name;
+                break;
+            }
+        }
+
+        // Tüm eğitmen opsiyonlarını gez
+        var options = trainerSelect.options;
+        var matchCount = 0;
+
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            var trainerId = option.value;
+
+            // "Seçiniz" boş seçeneğini geç
+            if (trainerId === "") continue;
+
+            // Bu option'daki trainer'ın verisini bul
+            var trainerInfo = trainersData.find(t => t.id == trainerId);
+
+            if (trainerInfo) {
+                // Eğer Hoca'nın uzmanlığı == Seçilen Ders İsmine eşitse (Veya içeriyorsa)
+                // Örnek: Trainer.Specialization "Kick Boks" == Service.Name "Kick Boks"
+                if (selectedServiceName === "" || trainerInfo.specialization === selectedServiceName) {
+                    option.hidden = false; // Göster
+                    option.disabled = false;
+                    matchCount++;
+                } else {
+                    option.hidden = true; // Gizle
+                    option.disabled = true; // Seçilemez yap
+                }
+            }
+        }
+
+        // Seçimi sıfırla ki gizli bir adam seçili kalmasın
+        trainerSelect.value = "";
+
+        // Yardımcı yazı göster
+        if(selectedServiceId !== "") {
+            trainerHelp.classList.remove("d-none");
+            trainerHelp.innerText = selectedServiceName + " dersini veren " + matchCount + " eğitmen bulundu.";
+        } else {
+            trainerHelp.classList.add("d-none");
+            // Ders seçimi iptal edilirse herkesi geri göster
+             for (var i = 0; i < options.length; i++) {
+                 options[i].hidden = false;
+                 options[i].disabled = false;
+             }
+        }
+    });
+
+    // 2. EĞİTMEN SEÇİLİNCE: Dersi Otomatik Seç
+    trainerSelect.addEventListener("change", function() {
+        var selectedTrainerId = this.value;
+
+        if (selectedTrainerId === "") return;
+
+        // Seçilen hocanın uzmanlığını bul
+        var trainerInfo = trainersData.find(t => t.id == selectedTrainerId);
+
+        if (trainerInfo) {
+            var specialization = trainerInfo.specialization;
+
+            // Bu uzmanlığa sahip dersi bul
+            var matchingService = servicesData.find(s => s.name === specialization);
+
+            if (matchingService) {
+                // Hizmet dropdown'ını otomatik o derse ayarla
+                serviceSelect.value = matchingService.id;
+
+                // Tetiklemek için (yukarıdaki filtreleme çalışsın diye)
+                // Ama sonsuz döngüye girmesin diye manuel filtreleme yapmayabiliriz,
+                // sadece seçili gelsin yeter.
+            }
+        }
+    });
+    // Controller'dan gelen verileri JSON olarak JS değişkenine alıyoruz
+    var trainersData = @Html.Raw(Json.Serialize(ViewBag.TrainersData));
+    var servicesData = @Html.Raw(Json.Serialize(ViewBag.ServicesData));
+
+    // Elementleri seç
+    var serviceSelect = document.getElementById("ServiceDropdown");
+    var trainerSelect = document.getElementById("TrainerDropdown");
+    var trainerHelp = document.getElementById("trainerHelp");
+
+    // YARDIMCI FONKSİYON: Türkçe karakterleri de düzelterek küçültür
+    function normalizeText(text) {
+        if (!text) return "";
+        return text.toLocaleLowerCase('tr-TR').trim(); // "CrossFit" -> "crossfit" yapar
     }
-}
+
+    // 1. DERS SEÇİLİNCE: Eğitmenleri Filtrele
+    serviceSelect.addEventListener("change", function() {
+        var selectedServiceId = this.value;
+        var selectedServiceName = "";
+
+        // Seçilen dersin ismini bul
+        for (var i = 0; i < servicesData.length; i++) {
+            if (servicesData[i].id == selectedServiceId) {
+                selectedServiceName = servicesData[i].name;
+                break;
+            }
+        }
+
+        // Karşılaştırma için ders ismini küçült
+        var normalizedServiceName = normalizeText(selectedServiceName);
+
+        // Tüm eğitmen opsiyonlarını gez
+        var options = trainerSelect.options;
+        var matchCount = 0;
+
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            var trainerId = option.value;
+
+            // "Seçiniz" boş seçeneğini geç
+            if (trainerId === "") continue;
+
+            // Bu option'daki trainer'ın verisini bul
+            var trainerInfo = trainersData.find(t => t.id == trainerId);
+
+            if (trainerInfo) {
+                var normalizedSpecialization = normalizeText(trainerInfo.specialization);
+
+                // EŞLEŞTİRME KONTROLÜ (Artık büyük/küçük harf fark etmez)
+                if (selectedServiceId === "" || normalizedSpecialization === normalizedServiceName) {
+                    option.hidden = false; // Göster
+                    option.disabled = false;
+                    matchCount++;
+                } else {
+                    option.hidden = true; // Gizle
+                    option.disabled = true; // Seçilemez yap
+                }
+            }
+        }
+
+        // Seçimi sıfırla
+        trainerSelect.value = "";
+
+        // Yardımcı yazı göster
+        if(selectedServiceId !== "") {
+            trainerHelp.classList.remove("d-none");
+            if (matchCount > 0) {
+                trainerHelp.innerText = selectedServiceName + " dersini veren " + matchCount + " eğitmen bulundu.";
+                trainerHelp.className = "text-success small"; // Yeşil yazı
+            } else {
+                trainerHelp.innerText = "Bu dersi veren uygun eğitmen bulunamadı.";
+                trainerHelp.className = "text-danger small"; // Kırmızı uyarı
+            }
+        } else {
+            trainerHelp.classList.add("d-none");
+            // Ders seçimi iptal edilirse herkesi geri göster
+             for (var i = 0; i < options.length; i++) {
+                 options[i].hidden = false;
+                 options[i].disabled = false;
+             }
+        }
+    });
+
+    // 2. EĞİTMEN SEÇİLİNCE: Dersi Otomatik Seç
+    trainerSelect.addEventListener("change", function() {
+        var selectedTrainerId = this.value;
+
+        if (selectedTrainerId === "") return;
+
+        var trainerInfo = trainersData.find(t => t.id == selectedTrainerId);
+
+        if (trainerInfo) {
+            var normalizedSpec = normalizeText(trainerInfo.specialization);
+
+            // Bu uzmanlığa sahip dersi bul (Yine harf duyarlılığı olmadan)
+            var matchingService = servicesData.find(s => normalizeText(s.name) === normalizedSpec);
+
+            if (matchingService) {
+                serviceSelect.value = matchingService.id;
+
+                // Seçtikten sonra yukarıdaki filtreleme olayını tetikle (Event Dispatch)
+                // Böylece diğer alakasız hocalar gizlenir, mantık bozulmaz.
+                var event = new Event('change');
+                serviceSelect.dispatchEvent(event);
+
+                // Ama bizim hoca gizlenmesin diye (dispatchEvent seçimi silebiliyor) tekrar set et
+                // (Küçük bir zaman aşımı ile, çünkü UI thread'i beklesin)
+                setTimeout(() => {
+                    trainerSelect.value = selectedTrainerId;
+                }, 50);
+            }
+        }
+    });
+
+</script>

@@ -214,7 +214,14 @@ namespace FitnessCenter.Controllers
                 return NotFound();
 
             ViewData["MemberId"] = new SelectList(_context.Members, "Id", "FullName", appointment.MemberId);
-            ViewData["TrainerId"] = new SelectList(_context.Trainers, "Id", "FirstName", appointment.TrainerId);
+
+            // Edit sayfası için de Ad Soyad birleştiriyoruz
+            ViewData["TrainerId"] = new SelectList(_context.Trainers
+                .Select(t => new {
+                    Id = t.Id,
+                    FullName = t.FirstName + " " + t.LastName
+                }), "Id", "FullName");
+
             ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Name", appointment.ServiceId);
 
             return View(appointment);
@@ -336,6 +343,7 @@ namespace FitnessCenter.Controllers
         /// <summary>
         /// Create ekranı için dropdown + member bilgilerini doldurur.
         /// Admin ise tüm üyeleri gösterir, Member ise sadece kendisini hidden olarak yollar.
+        /// Ayrıca JS ile filtreleme yapılabilmesi için Ham Verileri (ViewBag) doldurur.
         /// </summary>
         private async Task FillDropdownsForCreateAsync(Appointment appointment, bool isAdmin)
         {
@@ -353,10 +361,26 @@ namespace FitnessCenter.Controllers
                 ViewData["CurrentMemberName"] = member?.FullName;
             }
 
-            ViewData["TrainerId"] =
-                new SelectList(_context.Trainers, "Id", "FirstName", appointment.TrainerId);
+            // 1. EĞİTMEN LİSTESİ (Select List - Görüntü için)
+            // Ad ve Soyad birleştirilerek listeye ekleniyor.
+            ViewData["TrainerId"] = new SelectList(_context.Trainers
+                .Select(t => new
+                {
+                    Id = t.Id,
+                    FullName = t.FirstName + " " + t.LastName
+                }), "Id", "FullName", appointment.TrainerId);
+
+            // 2. HİZMET LİSTESİ (Select List - Görüntü için)
             ViewData["ServiceId"] =
                 new SelectList(_context.Services, "Id", "Name", appointment.ServiceId);
+
+            // 3. JAVASCRIPT İÇİN HAM VERİLER (YENİ EKLENEN KISIM)
+            // Bu veriler View tarafında "Hangi hoca hangi dersi veriyor" kontrolü için kullanılacak.
+            ViewBag.TrainersData = await _context.Trainers
+                .Select(t => new { t.Id, t.Specialization }).ToListAsync();
+
+            ViewBag.ServicesData = await _context.Services
+                .Select(s => new { s.Id, s.Name }).ToListAsync();
         }
     }
 }
