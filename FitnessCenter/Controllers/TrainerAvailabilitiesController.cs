@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FitnessCenter.Controllers
 {
+    // Class seviyesinde [Authorize] var: Yani sadece giriş yapmış (üye veya admin) kişiler girebilir.
     [Authorize]
     public class TrainerAvailabilitiesController : Controller
     {
@@ -22,7 +23,8 @@ namespace FitnessCenter.Controllers
         }
 
         // GET: TrainerAvailabilities
-        [Authorize(Roles = "Admin")]
+        // DÜZELTME: [Authorize(Roles = "Admin")] SİLİNDİ.
+        // Artık giriş yapan herkes (Üyeler dahil) burayı görebilir.
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.TrainerAvailabilities.Include(t => t.Trainer);
@@ -30,7 +32,8 @@ namespace FitnessCenter.Controllers
         }
 
         // GET: TrainerAvailabilities/Details/5
-        [Authorize(Roles = "Admin")]
+        // DÜZELTME: [Authorize(Roles = "Admin")] SİLİNDİ.
+        // Detayları da herkes görebilsin.
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,6 +52,8 @@ namespace FitnessCenter.Controllers
             return View(trainerAvailability);
         }
 
+        // --- AŞAĞIDAKİLER SADECE ADMIN İÇİN (AYNEN KALIYOR) ---
+
         // GET: TrainerAvailabilities/Create
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
@@ -62,10 +67,7 @@ namespace FitnessCenter.Controllers
             return View();
         }
 
-
         // POST: TrainerAvailabilities/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -95,13 +97,12 @@ namespace FitnessCenter.Controllers
             {
                 return NotFound();
             }
-            ViewData["TrainerId"] = new SelectList(_context.Trainers, "Id", "Id", trainerAvailability.TrainerId);
+            // Edit sayfasında Dropdown'da hocanın ismini görmek için "FirstName" seçilmeli (önceki kodda "Id" seçiliydi, düzelttim)
+            ViewData["TrainerId"] = new SelectList(_context.Trainers, "Id", "FirstName", trainerAvailability.TrainerId);
             return View(trainerAvailability);
         }
 
         // POST: TrainerAvailabilities/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -132,7 +133,7 @@ namespace FitnessCenter.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TrainerId"] = new SelectList(_context.Trainers, "Id", "Id", trainerAvailability.TrainerId);
+            ViewData["TrainerId"] = new SelectList(_context.Trainers, "Id", "FirstName", trainerAvailability.TrainerId);
             return View(trainerAvailability);
         }
 

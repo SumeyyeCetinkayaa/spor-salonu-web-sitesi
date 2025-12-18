@@ -1,41 +1,154 @@
 ﻿@model IEnumerable<FitnessCenter.Models.TrainerAvailability>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Eğitmen Saatleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Trainer Availability</h1>
+<div class="container mt-5">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3" style="border-bottom: 1px solid #2A3441;">
+        <div>
+            <h1 class="display-6 fw-bold text-uppercase m-0 text-white">
+                <i class="bi bi-calendar-week-fill" style="color: var(--vurgu-rengi);"></i> ÇALIŞMA SAATLERİ
+            </h1>
+            <p class="text-muted mt-1 small">Eğitmenlerin haftalık müsaitlik durumu.</p>
+        </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Trainer</th>
-            <th>Day</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+        @if (User.IsInRole("Admin"))
         {
-            <tr>
-                <td>@item.Trainer?.FirstName</td>
-                <td>@item.DayName</td>
-                <td>@item.StartTime.ToString(@"hh\:mm")</td>
-                <td>@item.EndTime.ToString(@"hh\:mm")</td>
-
-
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+            <div>
+                <a asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-lg me-2"></i>YENİ SAAT EKLE
+                </a>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+
+    <div class="row g-4">
+        @if (!Model.Any())
+        {
+            <div class="col-12">
+                <div class="alert alert-dark text-center border-secondary" style="background-color: var(--arkaplan-kutu);">
+                    <i class="bi bi-info-circle fs-4 d-block mb-2 text-primary"></i>
+                    Henüz çalışma saati eklenmemiş.
+                </div>
+            </div>
+        }
+        else
+        {
+            var groupedList = Model.GroupBy(x => x.TrainerId)
+            .Select(g => new
+            {
+                Trainer = g.First().Trainer,
+                Availabilities = g.OrderBy(a => a.DayOfWeek).ThenBy(a => a.StartTime)
+            })
+            .OrderBy(g => g.Trainer.FirstName);
+
+            foreach (var group in groupedList)
+            {
+                <div class="col-12">
+                    <div class="card shadow-lg" style="background-color: var(--arkaplan-kutu); border: 1px solid #2A3441;">
+
+                        <div class="card-header py-3 d-flex align-items-center" style="background-color: rgba(46, 204, 113, 0.08); border-bottom: 1px solid #2A3441;">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold me-3 shadow-sm"
+                                 style="width: 45px; height: 45px; background-color: #0B0F14; border: 1px solid var(--vurgu-rengi); color: var(--vurgu-rengi); font-size:1.1rem;">
+                                @(group.Trainer?.FirstName?.Substring(0, 1) ?? "?")
+                            </div>
+                            <div>
+                                <h5 class="m-0 fw-bold text-white text-uppercase" style="letter-spacing:1px;">
+                                    @group.Trainer?.FirstName @group.Trainer?.LastName
+                                </h5>
+                                <small class="text-muted">@group.Trainer?.Specialization Eğitmeni</small>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0" style="color: var(--yazi-ana);">
+                                    <thead>
+                                        <tr class="text-muted small text-uppercase" style="border-bottom: 1px solid #2A3441;">
+                                            <th class="ps-4 py-3" style="width: 20%;">GÜN</th>
+                                            <th class="py-3" style="width: 40%;">SAAT ARALIĞI</th>
+
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                <th class="py-3 text-end pe-4">İŞLEMLER</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in group.Availabilities)
+                                        {
+                                            string gunAdi = "";
+                                            string badgeColor = "bg-dark border-secondary text-muted";
+                                            int dayVal = (int)item.DayOfWeek;
+
+                                            switch (dayVal)
+                                            {
+                                                case 1: gunAdi = "Pazartesi"; badgeColor = "border-primary text-primary"; break;
+                                                case 2: gunAdi = "Salı"; badgeColor = "border-primary text-primary"; break;
+                                                case 3: gunAdi = "Çarşamba"; badgeColor = "border-primary text-primary"; break;
+                                                case 4: gunAdi = "Perşembe"; badgeColor = "border-primary text-primary"; break;
+                                                case 5: gunAdi = "Cuma"; badgeColor = "border-primary text-primary"; break;
+                                                case 6: gunAdi = "Cumartesi"; badgeColor = "border-warning text-warning"; break;
+                                                case 0: gunAdi = "Pazar"; badgeColor = "border-warning text-warning"; break;
+                                            }
+
+                                            <tr style="border-bottom: 1px solid #1F2933;">
+                                                <td class="ps-4">
+                                                    <span class="badge bg-transparent border fw-normal px-3 py-2 @badgeColor"
+                                                          style="letter-spacing:0.5px; border-style:dashed !important;">
+                                                        @gunAdi
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center text-white">
+                                                        <i class="bi bi-clock me-3 opacity-50"></i>
+                                                        <span class="fw-bold fs-6">@item.StartTime.ToString(@"hh\:mm")</span>
+                                                        <span class="mx-3 text-muted">➜</span>
+                                                        <span class="fw-bold fs-6">@item.EndTime.ToString(@"hh\:mm")</span>
+                                                    </div>
+                                                </td>
+
+                                                @if (User.IsInRole("Admin"))
+                                                {
+                                                    <td class="text-end pe-4">
+                                                        <div class="btn-group" role="group">
+                                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-dark border-secondary text-muted hover-white">
+                                                                <i class="bi bi-pencil-square"></i>
+                                                            </a>
+                                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-dark border-secondary text-danger hover-danger">
+                                                                <i class="bi bi-trash"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.02) !important;
+    }
+
+    .hover-white:hover {
+        color: #fff !important;
+    }
+
+    .hover-danger:hover {
+        background-color: var(--danger-rengi) !important;
+        color: #fff !important;
+        border-color: var(--danger-rengi) !important;
+    }
+</style>

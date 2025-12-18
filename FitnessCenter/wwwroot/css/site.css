@@ -2,21 +2,23 @@
    1. FONT ÝTHALATI (GOOGLE FONTS) - EN ÜSTE YAPIÞTIR
    ========================================================= */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;700&display=swap');
-
 /* =========================================================
-   2. AYARLAR (DEÐÝÞKENLER)
+   2. AYARLAR (DEÐÝÞKENLER) - KIRMIZI & MODERN LACÝVERT
    ========================================================= */
 :root {
-    /* Renkler (Ayný kalýyor) */
-    --arkaplan-ana: #000000;
-    --arkaplan-kutu: #1A1A1A;
+    /* --- RENKLER --- */
+    /* Zifiri siyah (#000) yerine bu modern tonu kullanýyoruz: */
+    --arkaplan-ana: #0f172a; /* Çok koyu, mat, asil bir lacivert */
+    --arkaplan-kutu: #1e293b; /* Kartlar ve kutular için bir ton açýðý */
+    /* SENÝN KIRMIZIN (AYNI KALDI) */
     --vurgu-rengi: #E63946;
     --vurgu-hover: #D62828;
-    --yazi-ana: #FFFFFF;
-    --yazi-silik: #B3B3B3;
-    /* Font Ayarlarý */
-    --font-baslik: 'Oswald', sans-serif; /* Sert Baþlýklar */
-    --font-metin: 'Roboto', sans-serif; /* Okunaklý Metinler */
+    /* Yazýlar (Tam beyaz yerine hafif buz mavisi beyaz, göz yormaz) */
+    --yazi-ana: #f8fafc;
+    --yazi-silik: #94a3b8;
+    /* --- FONT AYARLARI (AYNI KALDI) --- */
+    --font-baslik: 'Oswald', sans-serif;
+    --font-metin: 'Roboto', sans-serif;
 }
 
 /* =========================================================
@@ -75,6 +77,7 @@ a {
     border-bottom: 2px solid var(--vurgu-rengi); /* Altýna kýrmýzý çizgi */
     box-shadow: 0 4px 10px rgba(230, 57, 70, 0.2); /* Hafif kýrmýzý gölge */
 }
+
 .navbar-brand {
     color: var(--vurgu-rengi) !important; /* Burayý #FFF yerine deðiþkenimiz yaptýk */
     font-weight: 900; /* Daha kalýn font */

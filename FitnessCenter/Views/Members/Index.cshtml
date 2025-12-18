@@ -1,65 +1,105 @@
 ﻿@model IEnumerable<FitnessCenter.Models.Member>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Üye Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="container mt-5">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BirthDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Goal)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Goal)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3" style="border-bottom: 1px solid #2A3441;">
+        <div>
+            <h1 class="display-6 fw-bold text-uppercase m-0 text-white">
+                <i class="bi bi-people-fill" style="color: var(--vurgu-rengi);"></i> ÜYE YÖNETİMİ
+            </h1>
+            <p class="text-muted mt-1 small">Sistemdeki kayıtlı üyelerin listesi.</p>
+        </div>
+        <div>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-person-plus-fill me-2"></i>YENİ ÜYE EKLE
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-lg" style="background-color: var(--arkaplan-kutu); border: 1px solid #2A3441;">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" style="color: var(--yazi-ana);">
+                    <thead style="background-color: rgba(46, 204, 113, 0.1); color: var(--vurgu-rengi);">
+                        <tr>
+                            <th class="py-3 ps-4">AD SOYAD</th>
+                            <th class="py-3">İLETİŞİM</th>
+                            <th class="py-3">DOĞUM TARİHİ</th>
+                            <th class="py-3">HEDEF</th>
+                            <th class="py-3 text-end pe-4">İŞLEMLER</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr style="border-bottom: 1px solid #2A3441;">
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold me-3"
+                                             style="width: 40px; height: 40px; background-color: #0B0F14; border: 1px solid #2A3441; color: var(--vurgu-rengi);">
+                                            @(item.FirstName?.Length > 0 ? item.FirstName.Substring(0, 1) : "")@(item.LastName?.Length > 0 ? item.LastName.Substring(0, 1) : "")
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-white">@item.FirstName @item.LastName</div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="text-white small mb-1">
+                                            <i class="bi bi-envelope me-2 text-muted"></i>@item.Email
+                                        </span>
+                                        <span class="text-muted small">
+                                            <i class="bi bi-telephone me-2"></i>@item.Phone
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="badge fw-normal" style="background-color: #0B0F14; border: 1px solid #2A3441; color: #9AA4AF;">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        @(item.BirthDate.HasValue? item.BirthDate.Value.ToString("dd.MM.yyyy") : "-")
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="fw-bold small text-uppercase" style="color: var(--vurgu-rengi);">
+                                        @item.Goal
+                                    </span>
+                                </td>
+
+                                <td class="text-end pe-4">
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary text-white" title="Düzenle">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info" title="Detaylar">
+                                            <i class="bi bi-info-circle"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger" title="Sil">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-dark mt-4 text-center border-secondary" style="background-color: var(--arkaplan-kutu);">
+            <i class="bi bi-exclamation-triangle-fill fs-4 d-block mb-2 text-warning"></i>
+            Henüz sistemde kayıtlı üye bulunmamaktadır.
+        </div>
+    }
+</div>
